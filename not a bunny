@@ -1,0 +1,5 @@
+for(count=[0:4]){color("lavender")
+    rotate([0,0,72*count])
+    translate([0,25,0])
+    cube(size=[40,5,160],center=true);
+}
