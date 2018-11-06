@@ -1,0 +1,228 @@
+//Etch-a-SCAD
+
+ //In this example, we will be drawing a bunny.
+
+ //Variables
+
+ resolution = 1;
+ //Edit the resolution to make it easier to rotate around it as well as make it look more and more like a bunny
+ 
+ //Primitive/Base Modules
+
+ module cube_base(length, width, height){
+     cube(size = [length, width, height], center = true);
+ }
+ 
+ module simple_cube_base(length){//, width, height){
+     //cube(size = [length, width, height], center = true);
+     cube(length, center = true);
+ }
+ 
+ module cylinder_base(radius, height){
+     cylinder(r = radius, h = height, $fn = resolution, center = true);
+ }
+ 
+ module cone_base(radius1, radius2, height){
+     cylinder(r1 = radius1, r2 = radius2, h = height, $fn = resolution, center = true);
+ }
+ 
+ module sphere_base(radius){
+     sphere(radius, $fn = resolution, center = true);
+ }
+ 
+ 
+ body_size   = 80;
+ head_size   = 40;
+ foot_rad    = 15;
+ foot_length = body_size; 
+ 
+ 
+ //Torso
+color("white")
+rotate([0, 20, 0]){
+scale([0.65, 0.75, 1])
+sphere_base(body_size);
+}
+
+ //Head
+ color("white")
+ translate([sin(20) * body_size + 10, 0, cos(20) * body_size + 10]){
+ sphere_base(head_size);
+ }
+     
+//Nose
+color("red")
+ union(){
+ cylinder_base(10, 60);
+         translate([75, 0, 85])
+         sphere_base(5);
+ }
+     
+
+//Eyes
+ 
+//Right Eye
+ color("black")
+ union(){
+ cylinder_base(10, 60);
+         translate([70, -15, 100])
+         sphere_base(5);
+ }
+     //Pupil White
+        color("white")
+        union(){
+        cylinder_base(10, 60);
+            translate([71.5, -15, 100])
+            sphere_base(4.5);
+    }
+        //Pupil Red
+            color("red")
+            union(){
+        cylinder_base(10, 60);
+            translate([75, -15, 100])
+            sphere_base(1.5);
+    }
+//Left Eye
+color("black")
+ union(){
+ cylinder_base(10, 60);
+         translate([70, 15, 100])
+         sphere_base(5);
+ }
+    //Pupil White
+        color("white")
+        union(){
+     cylinder_base(10, 60);
+         translate([71.5, 15, 100])
+         sphere_base(4.5);
+ }
+        //Pupil Red
+            color("red")
+            union(){
+     cylinder_base(10, 60);
+         translate([75, 15, 100])
+         sphere_base(1.5);
+ 
+ }
+     
+ //Whiskers
+ 
+//Right Whiskers
+color("black")
+translate([77.5,-15,90]){
+rotate([60, 0, 0])
+scale([0., 0.005, .1])
+sphere_base(150);
+}
+color("black")
+translate([77.5,-15,85]){
+rotate([90, 0, 0])
+scale([0., 0.005, .1])
+sphere_base(150);
+}
+color("black")
+translate([77.5,-15,80]){
+rotate([120, 0, 0])
+scale([0., 0.005, .1])
+sphere_base(150);
+}
+//Left Whiskers
+color("black")
+translate([77.5,15,90]){
+rotate([-60, 0, 0])
+scale([0., 0.005, .1])
+sphere_base(150);
+}
+color("black")
+translate([77.5,15,85]){
+rotate([-90, 0, 0])
+scale([0., 0.005, .1])
+sphere_base(150);
+}
+color("black")
+translate([77.5,15,80]){
+rotate([-120, 0, 0])
+scale([0., 0.005, .1])
+sphere_base(150);
+}
+  
+ 
+//Mouth
+color("lightblue")
+ union(){
+ cylinder_base(10, 60);
+    translate([75, 0, 75])
+        scale([1, 2, 1])
+         sphere_base(5);
+ }
+
+//Teeth
+color("red")
+translate([65,0,65]){
+ cube(10);
+}
+color("red") 
+translate([65,-10,65]){
+ cube(10);
+}
+
+ 
+ //Ears
+ 
+ //Right Ear
+color("red")
+translate([25,-20,125]){
+rotate([10, 0, 0])
+scale([0., 0.05, .25])
+sphere_base(150);
+}
+ //Left Ear
+color("red")
+translate([25,20,125]){
+rotate([-10, 0, 0])
+scale([0., 0.05, .25])
+sphere_base(150);
+}
+ 
+// Feet
+
+ //Front Feet
+ color("white")
+ union(){
+     translate([body_size * 0.45, body_size * 0.45, -body_size * -0.2]){
+         rotate([0, 105, 0])
+         cylinder_base(foot_rad, foot_length);
+         translate([-foot_length * 0.5, 0, 0])
+         sphere_base(foot_rad);
+     }
+     translate([body_size * .45, body_size * -.45, -body_size * -0.2]){
+         rotate([0, 105, 0])
+         cylinder_base(foot_rad, foot_length);
+         translate([-foot_length * 0.5, 0, 0])
+         sphere_base(foot_rad);
+ }}
+ 
+ // Back Feet
+ color("white")
+ union(){
+     translate([body_size * 0.25, body_size * 0.55, -body_size * 0.8]){
+         rotate([0, 90, 0])
+         cylinder_base(foot_rad, foot_length);
+         translate([-foot_length * 0.5, 0, 0])
+         sphere_base(foot_rad);
+     }
+     translate([body_size * 0.25, body_size * -0.55, -body_size * 0.8]){
+         rotate([0, 90, 0])
+         cylinder_base(foot_rad, foot_length);
+         translate([-foot_length * 0.5, 0, 0])
+         sphere_base(foot_rad);
+ }}
+ 
+ //Tail
+ color("lightblue")
+ union(){
+ cylinder_base(15, 80);
+         translate([-60, 0, -45])
+         sphere_base(foot_rad);
+ 
+ }
